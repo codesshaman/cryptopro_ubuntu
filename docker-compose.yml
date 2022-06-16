@@ -4,7 +4,6 @@ services:
   nginx:
     image: nginx:stable-alpine
     volumes:
-      # - ./sources:/tmp
       - ./nginx/conf.d:/etc/nginx/conf.d/
     ports:
       - "84:80"
@@ -12,14 +11,12 @@ services:
     restart: unless-stopped
     container_name: nginx4
     depends_on:
-      - app4
+      - cryptopro
 
-  app4:
+  cryptopro:
     build:
       context: .
       dockerfile: Dockerfile
     tty:  true
     restart: unless-stopped
-    volumes:
-      # - ./sources:/tmp
-    container_name: app4
+    container_name: cryptopro
