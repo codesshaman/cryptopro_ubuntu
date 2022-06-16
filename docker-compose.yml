@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      # - ./public:/tmp
+      - ./nginx/conf.d:/etc/nginx/conf.d/
+    ports:
+      - "85:80"
+    tty:  true
+    restart: unless-stopped
+    container_name: nginx3
+    depends_on:
+      - app3
+
+  app3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty:  true
+    restart: unless-stopped
+    volumes:
+      # - ./public:/tmp
+    container_name: app3
