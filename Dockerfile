@@ -33,4 +33,5 @@ RUN cd /tmp/linux-amd64_deb && chmod +x install.sh && ./install.sh && \
     eval `/opt/cprocsp/src/doxygen/CSP/../setenv.sh --64` && make -f Makefile.unix && \
     cp /opt/cprocsp/src/phpcades/libphpcades.so $(php -i | grep 'extension_dir => ' | awk '{print $3}')/phpcades.so && \
     ln -s /opt/cprocsp/src/phpcades/libphpcades.so $(php -i | grep 'extension_dir => ' | awk '{print $3}')/libcppcades.so && \
-    echo 'extension=phpcades.so' >> /etc/php/7.2/cli/php.ini && cd /tmp && rm -rf *\
+    echo 'extension=phpcades.so' >> /etc/php/7.2/cli/php.ini && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
