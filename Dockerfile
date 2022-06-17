@@ -29,9 +29,8 @@ RUN cd /tmp/linux-amd64_deb && chmod +x install.sh && ./install.sh && \
     cp /tmp/Makefile.unix /opt/cprocsp/src/phpcades/ && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 10 && \
     cp /tmp/php7_support.patch/php7_support.patch /opt/cprocsp/src/phpcades && \
-    ln -s /opt/cprocsp/src/phpcades/libphpcades.so /usr/lib/php/20170718/libphpcades.so && \
-    ln -s /opt/cprocsp/src/phpcades/phpcades.so /usr/lib/php/20170718/phpcades.so
-
-RUN cd /opt/cprocsp/src/phpcades $$ patch -p0 < ./php7_support.patch
-
-# CMD ["bash", "config.sh"]
+    cd /opt/cprocsp/src/phpcades && patch -p0 < ./php7_support.patch && \
+    eval `/opt/cprocsp/src/doxygen/CSP/../setenv.sh --64` && make -f Makefile.unix && \
+    cp /opt/cprocsp/src/phpcades/libphpcades.so $(php -i | grep 'extension_dir => ' | awk '{print $3}')/phpcades.so && \
+    ln -s /opt/cprocsp/src/phpcades/libphpcades.so $(php -i | grep 'extension_dir => ' | awk '{print $3}')/libcppcades.so && \
+    echo 'extension=phpcades.so' >> /etc/php/7.2/cli/php.ini && cd /tmp && rm -rf *\
